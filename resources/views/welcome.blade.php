@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <!-- Custom CSS -->
     <link href="libraries/styles.css" rel="stylesheet">
 </head>
+
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -57,18 +59,21 @@
                     <div class="card-body text-center">
                         <i class="fas fa-microchip metric-icon text-primary"></i>
                         <h5 class="card-title">CPU Load</h5>
-                        <h2 class="mb-3">{{ $metrics['cpu_load'] }}%</h2>
+                        <h2 class="mb-3">
+                            {{ isset($metrics['cpu_load']) && is_numeric($metrics['cpu_load']) ? $metrics['cpu_load'] :
+                            'N/A' }}%
+                        </h2>
                         <div class="progress">
-                            <div class="progress-bar bg-primary" role="progressbar" 
-                                 style="width: {{ $metrics['cpu_load'] }}%" 
-                                 aria-valuenow="{{ $metrics['cpu_load'] }}" 
-                                 aria-valuemin="0" 
-                                 aria-valuemax="100">
+                            <div class="progress-bar bg-primary" role="progressbar"
+                                style="width: {{ isset($metrics['cpu_load']) && is_numeric($metrics['cpu_load']) ? $metrics['cpu_load'] : 0 }}%"
+                                aria-valuenow="{{ isset($metrics['cpu_load']) && is_numeric($metrics['cpu_load']) ? $metrics['cpu_load'] : 0 }}"
+                                aria-valuemin="0" aria-valuemax="100">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
 
             <!-- RAM Usage -->
             <div class="col-md-4">
@@ -77,10 +82,10 @@
                         <i class="fas fa-memory metric-icon text-success"></i>
                         <h5 class="card-title">RAM Usage</h5>
                         <h2 class="mb-3">{{ $metrics['ram_usage'] ?? 0 }} MB</h2>
-                        <p class="text-muted">of {{ $metrics['memory_limit'] ?? 'N/A' }} MB</p>
+                        <p class="text-muted">of {{ $metrics['memory_limit'] ?? 'N/A' }} </p>
                         <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" 
-                                 style="width: {{ isset($metrics['ram_usage'], $metrics['memory_limit']) && is_numeric($metrics['ram_usage']) && is_numeric($metrics['memory_limit']) && $metrics['memory_limit'] > 0 ? ($metrics['ram_usage'] / $metrics['memory_limit']) * 100 : 0 }}%">
+                            <div class="progress-bar bg-success" role="progressbar"
+                                style="width: {{ isset($metrics['ram_usage'], $metrics['memory_limit']) && is_numeric($metrics['ram_usage']) && is_numeric($metrics['memory_limit']) && $metrics['memory_limit'] > 0 ? ($metrics['ram_usage'] / $metrics['memory_limit']) * 100 : 0 }}%">
                             </div>
                         </div>
                     </div>
@@ -96,8 +101,8 @@
                         <h2 class="mb-3">{{ $metrics['disk_free_space'] }} GB</h2>
                         <p class="text-muted">Free Space</p>
                         <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" 
-                                 style="width: {{ $metrics['disk_usage_percentage'] }}%">
+                            <div class="progress-bar bg-warning" role="progressbar"
+                                style="width: {{ $metrics['disk_usage_percentage'] }}%">
                             </div>
                         </div>
                     </div>
@@ -145,4 +150,5 @@
     <!-- Custom JavaScript -->
     <script src="libraries/scripts.js"></script>
 </body>
+
 </html>
